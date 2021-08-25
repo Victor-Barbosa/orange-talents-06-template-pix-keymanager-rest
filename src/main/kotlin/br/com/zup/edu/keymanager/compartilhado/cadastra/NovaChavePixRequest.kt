@@ -1,12 +1,10 @@
-package br.com.zup.edu.keymanager
+package br.com.zup.edu.keymanager.compartilhado.cadastra
 
-import br.com.caelum.stella.validation.CPFValidator
 import br.com.zup.edu.RegistraChavePixRequest
 import br.com.zup.edu.TipoChave
 import br.com.zup.edu.TipoConta
 import br.com.zup.edu.keymanager.compartilhado.valid.ValidPixKey
 import io.micronaut.core.annotation.Introspected
-import io.micronaut.validation.validator.constraints.EmailValidator
 import java.util.*
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
@@ -31,12 +29,7 @@ enum class TipoChaveRequest(val atributoGrpc: TipoChave) {
 
     CPF(TipoChave.CPF) {
         override fun valida(chave: String?): Boolean {
-            if (chave.isNullOrBlank()) {
-                return false
-            }
-            return CPFValidator(false)
-                .invalidMessagesFor(chave)
-                .isEmpty()
+            return chave.isNullOrBlank()
         }
     },
 
@@ -52,15 +45,15 @@ enum class TipoChaveRequest(val atributoGrpc: TipoChave) {
 
     EMAIL(TipoChave.EMAIL) {
         override fun valida(chave: String?): Boolean {
-
-            if (chave.isNullOrBlank()) {
-                return false
+            if (!chave.isNullOrBlank()) {
+                val regex =
+                    Regex("^[a-zA-Z0-9.!#\$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?" +
+                            "(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*\$")
+                if (chave.matches(regex)) return true
             }
-            return EmailValidator().run {
-                initialize(null)
-                isValid(chave, null)
-            }
+            return false
         }
+
     },
 
     ALEATORIA(TipoChave.ALEATORIA) {

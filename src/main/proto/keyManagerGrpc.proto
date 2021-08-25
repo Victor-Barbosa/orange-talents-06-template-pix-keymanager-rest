@@ -61,13 +61,13 @@ message RemoveChavePixResponse{
 
 message CarregaChavePixRequest{
 
-  message FiltroPorPixEClienteId{
+  message FiltroPorPixId{
     string clienteId = 1;
     string pixId = 2;
   }
 
   oneof filtro{
-    FiltroPorPixEClienteId pixEClienteId = 1;
+    FiltroPorPixId pixId = 1;
     string chavePix = 2;
   }
 }

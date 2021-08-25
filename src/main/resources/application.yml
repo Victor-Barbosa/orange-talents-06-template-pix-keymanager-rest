@@ -2,14 +2,14 @@ micronaut:
   application:
     name: keymanagerRest
 
-datasources:
-  default:
-    url: jdbc:postgresql://localhost:5432/rest
-    driverClassName: org.postgresql.Driver
-    username: postgres
-    password: root
-    schema-generate: CREATE_DROP
-jpa.default.properties.hibernate.hbm2ddl.auto: update
+#datasources:
+#  default:
+#    url: jdbc:postgresql://localhost:5432/rest
+#    driverClassName: org.postgresql.Driver
+#    username: postgres
+#    password: root
+#    schema-generate: CREATE_DROP
+#jpa.default.properties.hibernate.hbm2ddl.auto: update
 
 grpc:
   client:
@@ -19,4 +19,6 @@ grpc:
     keyManager:
       addres: http://localhost:50051
 
-#rest
+jackson:
+  serialization:
+  writeDateAsTimestamps: false
